@@ -7,7 +7,7 @@ import itertools
 from math import sqrt
 
 data = {
-    "mineral": {
+    "mine": {
         "pos_in_inventory": (2600, 360),
         "location": "mine",
         "cobblestone": {
@@ -40,6 +40,27 @@ data = {
                 (-28.36, 21.9),
                 (5.39, 32.55),
                 (34.34, 28.65)
+            ],
+            "skeleton": "minecraft:brown_stained_glass",
+            "pos_in_inventory_exact": (2601, 189)
+        }
+    },
+    
+    "digging": {
+        "pos_in_inventory": (2687, 360),
+        "location": "digging",
+        "dirt": {
+            "pos": [-19995.42, 99, -19966.41],
+            "target_points": [
+                (-124.22, 46.97),
+                (-84.17, 51.92),
+                (-48.47, 43.82),
+                (-13.07, 55.22),
+                (-164.72, 61.52),
+                (-219.62, 54.92),
+                (-281.27, 64.82),
+                (-325.52, 50.42),
+                (-65.57, 79.67)
             ],
             "skeleton": "minecraft:brown_stained_glass",
             "pos_in_inventory_exact": (2601, 189)
@@ -83,7 +104,7 @@ def go_to_mine_pos(location, pos):
     minescript.echo(f"Reached {pos}")
 
 def convert(pos_in_inventory, pos_in_inventory_exact):
-    ammount = 900
+    ammount = 80
     
     minescript.execute("/kho")
     time.sleep(0.5)
@@ -104,7 +125,7 @@ def convert(pos_in_inventory, pos_in_inventory_exact):
     
     while ammount + 16 > 0:
         pydirectinput.rightClick()
-        time.sleep(0.01)
+        time.sleep(0.1)
         ammount -= 8
         
     pydirectinput.press('e')
@@ -114,8 +135,16 @@ def run(location, pos, target_points, skeleton, pos_in_inventory, pos_in_invento
     go_to_mine_pos(location, pos)
     
     cnt = 0
+    goals = 8320
+    one_star_cnt = 0
     
     for yaw, pitch in itertools.cycle(target_points):
+        minescript.echo(f"{8320 - goals}/8320")
+        
+        if goals <= 0:
+            minescript.execute("/warp afk")
+            break
+        
         minescript.player_set_orientation(yaw, pitch)
         time.sleep(0.1)
 
@@ -130,12 +159,14 @@ def run(location, pos, target_points, skeleton, pos_in_inventory, pos_in_invento
 
         minescript.player_press_attack(False)
         cnt += 1
+        goals -= 1
         time.sleep(0.05)
         
-        if cnt < 900:
+        if one_star_cnt >= 1022 or cnt < 80:
             continue
         
         convert(pos_in_inventory, pos_in_inventory_exact)
+        one_star_cnt += 80
         cnt = 0
 
 def main():
@@ -146,13 +177,22 @@ def main():
     # pos_in_inventory = data["mineral"]["pos_in_inventory"]
     # pos_in_inventory_exact = data["mineral"]["cobblestone"]["pos_in_inventory_exact"]
     
-    location = data["wood"]["location"]
-    pos = data["wood"]["oak"]["pos"]
-    target_points = data["wood"]["oak"]["target_points"]
-    skeleton = data["wood"]["oak"]["skeleton"]
-    pos_in_inventory = data["wood"]["pos_in_inventory"]
-    pos_in_inventory_exact = data["wood"]["oak"]["pos_in_inventory_exact"]
+    # location = data["wood"]["location"]
+    # pos = data["wood"]["oak"]["pos"]
+    # target_points = data["wood"]["oak"]["target_points"]
+    # skeleton = data["wood"]["oak"]["skeleton"]
+    # pos_in_inventory = data["wood"]["pos_in_inventory"]
+    # pos_in_inventory_exact = data["wood"]["oak"]["pos_in_inventory_exact"]
+    
+    location = data["digging"]["location"]
+    pos = data["digging"]["dirt"]["pos"]
+    target_points = data["digging"]["dirt"]["target_points"]
+    skeleton = data["digging"]["dirt"]["skeleton"]
+    pos_in_inventory = data["digging"]["pos_in_inventory"]
+    pos_in_inventory_exact = data["digging"]["dirt"]["pos_in_inventory_exact"]
     
     run(location, pos, target_points, skeleton, pos_in_inventory, pos_in_inventory_exact)
     
 main()
+
+# hoi 3 phut 15s
