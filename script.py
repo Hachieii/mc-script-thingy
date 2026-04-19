@@ -27,7 +27,23 @@ data = {
     },
     
     "wood": {
-        
+        "pos_in_inventory": (2644, 360),
+        "location": "wood",
+        "oak": {
+            "pos": [-10009, 98, -9970],
+            "target_points": [
+                (3.44, -49.2),
+                (4.19, -28.65),
+                (-28.06, 2.85),
+                (5.24, 4.05),
+                (34.19, 2.85),
+                (-28.36, 21.9),
+                (5.39, 32.55),
+                (34.34, 28.65)
+            ],
+            "skeleton": "minecraft:brown_stained_glass",
+            "pos_in_inventory_exact": (2601, 189)
+        }
     }
 }
 
@@ -116,19 +132,26 @@ def run(location, pos, target_points, skeleton, pos_in_inventory, pos_in_invento
         cnt += 1
         time.sleep(0.05)
         
-        if cnt < 10:
+        if cnt < 900:
             continue
         
         convert(pos_in_inventory, pos_in_inventory_exact)
         cnt = 0
 
 def main():
-    location = data["mineral"]["location"]
-    pos = data["mineral"]["cobblestone"]["pos"]
-    target_points = data["mineral"]["cobblestone"]["target_points"]
-    skeleton = data["mineral"]["cobblestone"]["skeleton"]
-    pos_in_inventory = data["mineral"]["pos_in_inventory"]
-    pos_in_inventory_exact = data["mineral"]["cobblestone"]["pos_in_inventory_exact"]
+    # location = data["mineral"]["location"]
+    # pos = data["mineral"]["cobblestone"]["pos"]
+    # target_points = data["mineral"]["cobblestone"]["target_points"]
+    # skeleton = data["mineral"]["cobblestone"]["skeleton"]
+    # pos_in_inventory = data["mineral"]["pos_in_inventory"]
+    # pos_in_inventory_exact = data["mineral"]["cobblestone"]["pos_in_inventory_exact"]
+    
+    location = data["wood"]["location"]
+    pos = data["wood"]["oak"]["pos"]
+    target_points = data["wood"]["oak"]["target_points"]
+    skeleton = data["wood"]["oak"]["skeleton"]
+    pos_in_inventory = data["wood"]["pos_in_inventory"]
+    pos_in_inventory_exact = data["wood"]["oak"]["pos_in_inventory_exact"]
     
     run(location, pos, target_points, skeleton, pos_in_inventory, pos_in_inventory_exact)
     
