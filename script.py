@@ -24,6 +24,10 @@ data = {
             "skeleton": "minecraft:gray_stained_glass",
             "pos_in_inventory_exact": (2601, 189)
         }
+    },
+    
+    "wood": {
+        
     }
 }
 
@@ -117,23 +121,6 @@ def run(location, pos, target_points, skeleton, pos_in_inventory, pos_in_invento
         
         convert(pos_in_inventory, pos_in_inventory_exact)
         cnt = 0
-
-
-def test():
-    # while 1:
-    #     minescript.echo(minescript.player_orientation())
-    #     time.sleep(1)
-    
-    # while 1:
-    #     minescript.echo(minescript.player_get_targeted_block().type)
-    #     time.sleep(1)
-    
-    # while 1:
-    #     minescript.echo(win32api.GetCursorPos())
-    #     time.sleep(1)
-    
-    return
-
 
 def main():
     location = data["mineral"]["location"]
