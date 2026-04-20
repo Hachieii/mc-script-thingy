@@ -2,6 +2,7 @@ import minescript
 import time
 import utils
 from math import sqrt
+import re
 
 def join_map():
     joinables = utils.get_joinable_map()
@@ -64,17 +65,41 @@ def have_enough_khoang_thach(ammount):
     data = utils.get_scoreboard_info()
     cur = price_parser(data["khoang_thach"])
     return cur >= ammount
+
+def get_current_progess():
+    content = str(utils.get_menu_info()[33])
+    match = re.search(r'\((\d+)/(\d+)\)', content)
+    
+    a = int(match.group(1))
+    b = int(match.group(2))
+    
+    return [a, b]
         
 def crafting():
     while have_enough_khoang_thach(10):
         while utils.get_syncId() <= 0:
             time.sleep(1)
             continue
+        
+        a, b = get_current_progess()
+        if a >= b:
+            utils.click_on_menu(33) # assuming have enough linh thach
+            time.sleep(0.5)
+            
+            # reopen the menu
+            minescript.press_backward(True)
+            time.sleep(0.25)
+            minescript.press_backward(False)
+            
+            minescript.press_forward(True)
+            time.sleep(0.5)
+            minescript.press_forward(False)
+            
         utils.click_on_menu(19)
         time.sleep(15)
 
 def main():
-    farming()
-    # crafting()
+    # farming()
+    crafting()
 
 main()
