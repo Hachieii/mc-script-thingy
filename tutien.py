@@ -74,6 +74,11 @@ def get_current_progess():
     b = int(match.group(2))
     
     return [a, b]
+
+def have_wait_time():
+    content = str(utils.get_menu_info()[33])
+    match = re.search(r'literal\{(\d+:\d+:\d+)\}', content)
+    return not match
         
 def crafting():
     while have_enough_khoang_thach(10):
@@ -82,7 +87,7 @@ def crafting():
             continue
         
         a, b = get_current_progess()
-        if a >= b:
+        if (not have_wait_time()) and a >= b:
             utils.click_on_menu(33) # assuming have enough linh thach
             time.sleep(0.5)
             

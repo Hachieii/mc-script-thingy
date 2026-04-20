@@ -13,6 +13,11 @@ def get_current_progess():
     b = int(match.group(2))
     
     return [a, b]
+
+def have_wait_time():
+    content = str(utils.get_menu_info()[33])
+    match = re.search(r'literal\{(\d+:\d+:\d+)\}', content)
+    return not match
     
 def test():
     # while 1:
@@ -29,18 +34,9 @@ def test():
     
     time.sleep(3)
     
-    utils.click_on_menu(33) # assuming have enough linh thach
-    time.sleep(0.5)
-    
-    # reopen the menu
-    minescript.player_press_backward(True)
-    time.sleep(0.25)
-    minescript.player_press_backward(False)
-    
-    minescript.player_press_forward(True)
-    time.sleep(0.5)
-    minescript.player_press_forward(False)
-    
+    # minescript.echo(utils.get_menu_info()[33])
+    # pyperclip.copy(have_wait_time())
+    minescript.echo(have_wait_time())
     minescript.echo("done")
     
 test()
