@@ -3,6 +3,18 @@ import time
 import utils
 from math import sqrt
 
+def join_map():
+    joinables = utils.get_joinable_map()
+    map_index = joinables[-1]
+    
+    while len(joinables) == 21: # full
+        utils.click_on_menu(42) # next page
+        time.sleep(0.2)
+        joinables = utils.get_joinable_map()
+        map_index = joinables[-1] if joinables else map_index
+    
+    utils.click_on_menu(map_index)
+
 def go_to_farm_land():
     minescript.player_press_sprint(True)
     minescript.player_press_forward(True)
@@ -16,7 +28,7 @@ def go_to_farm_land():
     minescript.player_press_jump(False)
     
     time.sleep(0.2)
-    utils.click_on_menu(11)
+    join_map()
     time.sleep(0.2)
     
 def is_dead(x, y, z):
@@ -62,7 +74,7 @@ def crafting():
         time.sleep(15)
 
 def main():
-    # farming()
-    crafting()
+    farming()
+    # crafting()
 
 main()

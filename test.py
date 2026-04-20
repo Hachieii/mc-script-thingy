@@ -5,6 +5,18 @@ import utils
 import pyperclip
 import re
 
+def join_map():
+    joinables = utils.get_joinable_map()
+    map_index = joinables[-1]
+    
+    while len(joinables) == 21: # full
+        utils.click_on_menu(42) # next page
+        time.sleep(0.2)
+        joinables = utils.get_joinable_map()
+        map_index = joinables[-1] if joinables else map_index
+    
+    utils.click_on_menu(map_index)
+
 def test():
     # while 1:
     #     minescript.echo(minescript.player_orientation())
@@ -18,18 +30,14 @@ def test():
     #     minescript.echo(win32api.GetCursorPos())
     #     time.sleep(1)
     
-    raw = utils.get_scoreboard_info()
-    # pyperclip.copy(raw)
-    minescript.echo(raw)
+    time.sleep(3)
+    # res = utils.get_menu_info()
+    # res = utils.get_joinable_map()
+    # minescript.echo(res)
+    # pyperclip.copy(res)
+    join_map()
+   
     
-    minescript.echo('done')
-    # res = re.search(r'(\d+)\s*\xca\x9f\xc9\xaa\xc9\xb4\xca\x9c', raw)
+    minescript.echo("done")
     
-    # minescript.echo('\xca\x9f\xc9\xaa\xc9\xb4\xca\x9c' in raw)
-    # for v in raw:
-    #     minescript.echo(type(v))
-    
-    # minescript.echo(utils.dump())
-    return
-
 test()

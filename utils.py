@@ -28,7 +28,6 @@ def get_syncId():
     return -1
     
 def click_on_menu(slotId, button=0, actionType="PICKUP"):
-    
     syncId = get_syncId() # window id
     # slotId = x # pos to click at
     # button = 0 # left click
@@ -43,7 +42,7 @@ def click_on_menu(slotId, button=0, actionType="PICKUP"):
         actionType,
         player
     )
-
+    
 def get_scoreboard_info():
     world = instance.field_1687
     scoreboard = world.method_8428() # getScoreboard()
@@ -112,8 +111,46 @@ def get_scoreboard_info():
         res["tu_vi"] = f"{v1}/{v2}"
     
     return res
+    
+def get_menu_info():
+    currentScreen = instance.field_1755
+    screenHandler = currentScreen.method_17577() # getScreenHandler()
+    slots = screenHandler.field_7761
+    
+    res = []
+    
+    for i in range(slots.size()):
+        slot = slots.get(i)
+        stack = slot.method_7677() # getStack()
+        
+        if stack.method_7960(): # isEmpty()
+            res.append(["", ""])
+            continue
+            
+        metadata = stack.method_57353() # getCompenents
+        cnt = stack.method_7947() # getCount()
+        
+        res.append([str(metadata), cnt])
+        
+    return res
+
+def get_joinable_map():
+    res = []
+    items = get_menu_info()
+    
+    for i in range(len(items)):
+        metadata = items[i][0]
+        
+        if "tham gia" not in metadata:
+            continue
+            
+        res.append(i)
+        
+    return res
 """)
 
 get_syncId = pyjinn.get("get_syncId")
 click_on_menu = pyjinn.get("click_on_menu")
 get_scoreboard_info = pyjinn.get("get_scoreboard_info")
+get_menu_info = pyjinn.get("get_menu_info")
+get_joinable_map = pyjinn.get("get_joinable_map")
