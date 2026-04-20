@@ -87,13 +87,13 @@ def crafting():
             time.sleep(0.5)
             
             # reopen the menu
-            minescript.press_backward(True)
-            time.sleep(0.25)
-            minescript.press_backward(False)
+            # minescript.player_press_backward(True)
+            # time.sleep(0.25)
+            # minescript.player_press_backward(False)
             
-            minescript.press_forward(True)
-            time.sleep(0.5)
-            minescript.press_forward(False)
+            # minescript.player_press_forward(True)
+            # time.sleep(0.5)
+            # minescript.player_press_forward(False)
             
         utils.click_on_menu(19)
         time.sleep(15)
