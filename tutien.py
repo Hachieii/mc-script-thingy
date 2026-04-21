@@ -4,6 +4,8 @@ import utils
 from math import sqrt
 import re
 
+time.sleep(5)
+
 def join_map():
     joinables = utils.get_joinable_map()
     map_index = joinables[-1]
@@ -72,8 +74,46 @@ def can_upgrade():
     wait_time = re.search(r'literal\{(\d+:\d+:\d+)\}', content)
     
     return int(progress.group(1)) >= int(progress.group(2)) and (not wait_time)
+
+def login():
+    minescript.execute("/login 00000000")
+    # yes hardcoded password, idc :p
+    
+    time.sleep(1)
+    
+    minescript.player_inventory_select_slot(4)
+    minescript.player_press_use(True)
+    time.sleep(0.1)
+    minescript.player_press_use(False)
+    
+    time.sleep(1)
+    utils.click_on_menu(22)
+    time.sleep(1)
+    utils.click_on_menu(22)
+    time.sleep(2)
+
+def relogin_if_disconnected():
+    world = minescript.world_info()
+    
+    cnt = 0
+    while not world:
+        time.sleep(10)
+        world = minescript.world_info()
+        
+        cnt += 1
+        if cnt <= 10:
+            continue
+        exit(0)
+    
+    spawn_location = world.spawn
+    if spawn_location == [0, 64, 0]:
+        return
+        
+    login()
         
 def crafting():
+    minescript.chat("#goto 45 150 -99818")
+    
     while have_enough_khoang_thach(10):
         while utils.get_syncId() <= 0:
             time.sleep(0.5)
@@ -86,8 +126,13 @@ def crafting():
         utils.click_on_menu(19)
         time.sleep(15)
 
-def main():
-    # farming()
-    crafting()
+def run(job):
+    relogin_if_disconnected()
+    
+    try:
+        job()
+    except Exception as e:
+        minescript.echo(e)
 
-main()
+while 1:
+    run(crafting)
