@@ -66,12 +66,10 @@ def have_enough_khoang_thach(ammount):
     cur = price_parser(data["khoang_thach"])
     return cur >= ammount
 
-def can_upgrade():
-    content = str(utils.get_menu_info()[33])
-    progress = re.search(r'\((\d+)/(\d+)\)', content)
-    wait_time = re.search(r'literal\{(\d+:\d+:\d+)\}', content)
-    
-    return int(progress.group(1)) >= int(progress.group(2)) and (not wait_time)
+def go_to_bequan():
+    minescript.execute("/warp bequan")
+    time.sleep(2)
+    minescript.chat("#goto 116 103 -99835")
 
 def login():
     minescript.execute("/login 00000000")
@@ -110,6 +108,8 @@ def relogin_if_disconnected():
     login()
         
 def crafting():
+    minescript.execute("/warp chetao")
+    time.sleep(2)
     minescript.chat("#goto 45 150 -99818")
     
     while have_enough_khoang_thach(10):
@@ -123,6 +123,8 @@ def crafting():
             
         utils.click_on_menu(19)
         time.sleep(15)
+        
+    go_to_bequan()
 
 def run(job):
     relogin_if_disconnected()
@@ -134,3 +136,6 @@ def run(job):
 
 while 1:
     run(crafting)
+
+# farming()
+# go_to_bequan()
