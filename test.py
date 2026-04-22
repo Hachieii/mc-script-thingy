@@ -53,7 +53,7 @@ def test():
     # utils.click_on_menu(22)
     # time.sleep(1)
     
-    minescript.echo(minescript.world_info().spawn)
-    # [0, 64, 0]
+    time.sleep(3)
+    minescript.echo(utils.can_upgrade())
     
 test()

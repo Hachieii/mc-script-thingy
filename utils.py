@@ -147,6 +147,22 @@ def get_joinable_map():
         res.append(i)
         
     return res
+
+def can_upgrade():
+    # wtf java?
+    Pattern = JavaClass("java.util.regex.Pattern")
+    content = str(get_menu_info()[33])
+    
+    progress_pattern = Pattern.compile('\\((\\d+)/(\\d+)\\)')
+    wait_time_pattern = Pattern.compile('literal\\{(\\d+:\\d+:\\d+)\\}')
+    
+    progress = progress_pattern.matcher(content)
+    wait_time = wait_time_pattern.matcher(content)
+    
+    if wait_time.find() or (not progress.find()):
+        return False
+    
+    return int(progress.group(1)) >= int(progress.group(2))
 """)
 
 get_syncId = pyjinn.get("get_syncId")
@@ -154,3 +170,4 @@ click_on_menu = pyjinn.get("click_on_menu")
 get_scoreboard_info = pyjinn.get("get_scoreboard_info")
 get_menu_info = pyjinn.get("get_menu_info")
 get_joinable_map = pyjinn.get("get_joinable_map")
+can_upgrade = pyjinn.get("can_upgrade")

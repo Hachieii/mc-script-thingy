@@ -4,8 +4,6 @@ import utils
 from math import sqrt
 import re
 
-time.sleep(5)
-
 def join_map():
     joinables = utils.get_joinable_map()
     map_index = joinables[-1]
@@ -119,7 +117,7 @@ def crafting():
             time.sleep(0.5)
             continue
         
-        if can_upgrade():
+        if utils.can_upgrade():
             utils.click_on_menu(33) # assuming have enough linh thach
             time.sleep(0.5)
             
